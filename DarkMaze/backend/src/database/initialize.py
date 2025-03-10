@@ -1,7 +1,8 @@
 import sqlite3
 
+DB_NAME = "game.db"
 def initialize():
-    conn = sqlite3.connect("game.db")
+    conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     # Create game_state table (with username column)
@@ -17,13 +18,5 @@ def initialize():
     )
     """)
 
-    conn.commit()
-    conn.close()
-    conn = sqlite3.connect("game.db")
-    cursor = conn.cursor()
-    conn.commit()
-    conn.close()
-    conn = sqlite3.connect("game.db")
-    cursor = conn.cursor()
     conn.commit()
     conn.close()

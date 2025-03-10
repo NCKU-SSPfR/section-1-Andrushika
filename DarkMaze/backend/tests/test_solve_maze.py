@@ -19,17 +19,18 @@ async def login_request():
 
 async def reset_request():
     """Reset Game state"""
+    global game_state
 
     async with httpx.AsyncClient() as client:
         response = await client.get(RESET_URL)
 
     assert response.status_code == 200  # Ensure the request was successful
     game_state = response.json()
-    assert game_state["current_position"] == [1, 0]
+    assert game_state['current_position'] == [1, 0]
 
 async def move_request(dir):
     """Simulates a frontend move request."""
-
+    global game_state
     payload = {"username": USERNAME, "direction": dir}
     
     async with httpx.AsyncClient() as client:
@@ -37,24 +38,40 @@ async def move_request(dir):
 
     assert response.status_code == 200  # Ensure the request was successful
     game_state = response.json()
-    assert game_state["health"] >= 3
+    assert game_state['health'] >= 3
 
 @pytest.mark.asyncio
 async def test_integration():
     await login_request()
-    #print(game_state)
+    print("after login", game_state)
     await reset_request()
-    #print(game_state)
-    for i in range(5):
+    print("after reset", game_state)
+    for _ in range(5):
         await move_request("down")
-        #print(game_state)
+        # print(game_state)
     assert game_state["current_position"] == [1,5]
 
 @pytest.mark.asyncio
 async def test_solver():
     await login_request()
     await reset_request()
-    for i in range(5):
+    for _ in range(5):
         await move_request("down")
+    await move_request("right")
+    await move_request("down")
+    await move_request("right")
+    await move_request("right")
+    await move_request("up")
+    await move_request("up")
+    await move_request("up")
+    await move_request("up")
+    await move_request("right")
+    await move_request("right")
+    await move_request("down")
+    await move_request("right")
+    await move_request("right")
+    await move_request("down")
+    await move_request("right")
+    await move_request("down")
     #print(game_state)
     assert game_state["health"] == 666

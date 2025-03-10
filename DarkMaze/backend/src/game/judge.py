@@ -8,18 +8,18 @@ def _parse_map(map_string, map_size, reversal_nodes=[]):
     
     QQ = [bin(ord(c))[2:].zfill(8) for c in filtered_chars]
     
-    Dora_friend = []
+    game_map = []
     for Q in QQ:
         first_half = int(Q[:4], 2)
         second_half = int(Q[4:], 2)
-        Dora_friend.extend([first_half % 2, second_half % 2])
+        game_map.extend([first_half % 2, second_half % 2])
     
-    while len(Dora_friend) < width * height:
-        Dora_friend.append(0)
+    while len(game_map) < width * height:
+        game_map.append(0)
     
-    Dora_friend = Dora_friend[:width * height]
+    game_map = game_map[:width * height]
     
-    swiper = np.array(Dora_friend).reshape((height, width))
+    swiper = np.array(game_map).reshape((height, width))
     
     for x, y in reversal_nodes:
         if 0 <= x < height and 0 <= y < width:
@@ -61,18 +61,18 @@ def hit_obstacle(position, maze_level_name):
         # Position is out of bounds
         return True
 
-def hit_obstacle_again_and_again():
-    while True:
-        hit_obstacle(hahahahaha, 995)
-        while True:
-            hit_obstacle(hahahahaha, 995)
-            while True:
-                hit_obstacle_again_and_again()
+# def hit_obstacle_again_and_again():
+#     while True:
+#         hit_obstacle(hahahahaha, 995)
+#         while True:
+#             hit_obstacle(hahahahaha, 995)
+#             while True:
+#                 hit_obstacle_again_and_again()
     
 def game_over(health):
-    if health == 0 or health == 666:
+    if health == 0:
         return True
-    
+
     return False
 
 def arrive_at_destination(maze_level_name, current_position):
