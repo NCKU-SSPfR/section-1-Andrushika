@@ -42,8 +42,6 @@ services:
     image: sonarsource/sonar-scanner-cli
     depends_on:
       - sonarqube
-    env_file:
-      - .env
     environment:
       - SONAR_HOST_URL=http://sonarqube:9000
     volumes:
