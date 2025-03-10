@@ -10,8 +10,9 @@ COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN chown -R myuser:myuser /app
+
 USER myuser
 
 EXPOSE 8000
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000",  "--reload"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
